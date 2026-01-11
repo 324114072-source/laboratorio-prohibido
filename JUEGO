@@ -1,0 +1,179 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>EL LABORATORIO PROHIBIDO</title>
+<style>
+body{
+  background:#0b0f1a;
+  color:#eaeaff;
+  font-family:"Courier New", monospace;
+  text-align:center;
+  margin:0;
+  padding:0;
+}
+h1{ color:#b7e; }
+button{
+  background:#1c2541;
+  color:#eaeaff;
+  border:1px solid #3a86ff;
+  padding:10px 14px;
+  margin:5px;
+  cursor:pointer;
+}
+button:hover{ background:#3a86ff; }
+#panel{
+  margin-top:20px;
+}
+#estructura{
+  font-size:28px;
+  margin:20px;
+}
+input{
+  padding:8px;
+  font-size:16px;
+  width:300px;
+}
+#feedback{
+  margin-top:15px;
+  font-size:16px;
+}
+.ok{ color:#7CFF7C; }
+.bad{ color:#FF7C7C; }
+.pista{ color:#FFD166; font-size:14px; }
+</style>
+</head>
+
+<body>
+
+<h1>🧪 EL LABORATORIO PROHIBIDO</h1>
+
+<div>
+<button onclick="nivel1()">NIVEL 1 – ALCANOS</button>
+<button onclick="nivel2()">NIVEL 2 – RAMIFICACIONES</button>
+<button onclick="nivel3()">NIVEL 3 – ALC / ALQ / ALQINO</button>
+<button onclick="nivel4()">NIVEL 4 – ALCOHOLES</button>
+<button onclick="nivel5()">NIVEL 5 – ALDEHÍDOS</button>
+<button onclick="nivel6()">NIVEL 6 – CETONAS</button>
+<button onclick="nivel7()">NIVEL 7 – ÁCIDOS</button>
+<button onclick="nivel8()">NIVEL 8 – ÉTERES</button>
+<button onclick="nivel9()">NIVEL 9 – ÉSTERES</button>
+<button onclick="nivel10()">NIVEL 10 – AMINAS</button>
+<button onclick="nivel11()">NIVEL 11 – AMIDAS</button>
+<button onclick="modoExamen()">🧠 MODO EXAMEN</button>
+</div>
+
+<div id="panel">
+  <div id="estructura">PRESIONA UN NIVEL</div>
+  <input id="respuesta" placeholder="ESCRIBE EL NOMBRE AQUÍ">
+  <br><br>
+  <button onclick="validar()">VALIDAR RESPUESTA</button>
+  <div id="feedback"></div>
+</div>
+
+<script>
+let respuestaCorrecta="";
+let pistaTexto="";
+
+function normalizar(t){
+  return t.toUpperCase()
+  .replace(/\s+/g,"")
+  .replace(/Á/g,"A").replace(/É/g,"E")
+  .replace(/Í/g,"I").replace(/Ó/g,"O")
+  .replace(/Ú/g,"U");
+}
+
+function limpiar(){
+  document.getElementById("respuesta").value="";
+  document.getElementById("feedback").innerHTML="";
+}
+
+function cargar(ejemplo,nombre,pista){
+  estructura.innerHTML=ejemplo;
+  respuestaCorrecta=nombre;
+  pistaTexto=pista;
+  limpiar();
+}
+
+function validar(){
+  const r=normalizar(respuesta.value);
+  const ok=normalizar(respuestaCorrecta);
+  if(r===ok){
+    feedback.innerHTML="<div class='ok'>✔ CORRECTO</div>";
+  }else{
+    feedback.innerHTML=
+      "<div class='bad'>✘ INCORRECTO</div>"+
+      "<div class='pista'>PISTA: "+pistaTexto+"</div>";
+  }
+}
+
+/* ===== NIVELES ===== */
+
+function nivel1(){
+  cargar("CH₃–CH₃","ETANO","ALCANO DE 2 CARBONOS");
+}
+
+function nivel2(){
+  cargar("CH₃–CH(CH₃)–CH₃","2METILPROPANO","RAMIFICACIÓN METIL");
+}
+
+function nivel3(){
+  const r=[
+    ["CH₂=CH₂","ETENO","DOBLE ENLACE → ALQUENO"],
+    ["CH≡CH","ETINO","TRIPLE ENLACE → ALQUINO"],
+    ["CH₃–CH₂–CH₃","PROPANO","CADENA SATURADA"]
+  ];
+  const x=r[Math.floor(Math.random()*r.length)];
+  cargar(x[0],x[1],x[2]);
+}
+
+function nivel4(){
+  cargar("CH₃–CH₂–OH","ETANOL","–OH → ALCOHOL");
+}
+
+function nivel5(){
+  cargar("CH₃–CHO","ETANAL","–CHO → ALDEHIDO");
+}
+
+function nivel6(){
+  cargar("CH₃–CO–CH₃","PROPANONA","C=O INTERNO → CETONA");
+}
+
+function nivel7(){
+  cargar("CH₃–COOH","ACIDOETANOICO","–COOH → ACIDO");
+}
+
+function nivel8(){
+  cargar("CH₃–O–CH₃","DIMETILETER","R–O–R'");
+}
+
+function nivel9(){
+  cargar("CH₃–COO–CH₃","ETANOATODEMETILO","–ATO DE –ILO");
+}
+
+function nivel10(){
+  cargar("CH₃–NH₂","METILAMINA","–NH₂ → AMINA");
+}
+
+function nivel11(){
+  cargar("CH₃–CONH₂","ETANAMIDA","–CONH₂ → AMIDA");
+}
+
+/* ===== MODO EXAMEN ===== */
+
+function modoExamen(){
+  const e=[
+    ["CH₃–CH₂–OH","ALCOHOL"],
+    ["CH₃–COOH","ACIDOCARBOXILICO"],
+    ["CH₃–NH₂","AMINA"],
+    ["CH₃–CHO","ALDEHIDO"],
+    ["CH₃–CO–CH₃","CETONA"]
+  ];
+  const x=e[Math.floor(Math.random()*e.length)];
+  cargar(x[0],x[1],"IDENTIFICA EL GRUPO FUNCIONAL");
+}
+</script>
+
+</body>
+</html>
